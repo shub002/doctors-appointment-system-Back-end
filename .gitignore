@@ -44,3 +44,4 @@ coverage/
 *.lock
 *.tgz
 *.bak
+.vercel

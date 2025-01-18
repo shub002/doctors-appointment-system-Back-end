@@ -1,4 +1,4 @@
-require('dotenv').config();  // This loads the environment variables from the .env file
+require('dotenv').config();  // Load environment variables from the .env file
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,25 +15,19 @@ connectDB();
 
 // CORS Configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',  // Replace with your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow specific HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
-  credentials: true,  // Allow cookies to be sent
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Adjust based on your environment
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
-// Enable CORS with the specified options
-app.use(cors(corsOptions));
-
-// Middleware
+app.use(cors(corsOptions)); // Enable CORS with options
 app.use(bodyParser.json());
 
-// Routes
+// API Routes
 app.use('/api/doctors', doctorRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/users', userRoutes);
 
-// Port configuration
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Export the app (for Vercel's serverless function)
+module.exports = app;
