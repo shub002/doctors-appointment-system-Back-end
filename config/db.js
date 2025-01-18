@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
+        const db = process.env.MONGO_URI;  // Get the MongoDB URI from environment variables
+        if (!db) {
+            throw new Error('MONGO_URI is not defined in .env');
+        }
+        await mongoose.connect(db, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
